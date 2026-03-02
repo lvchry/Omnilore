@@ -17,3 +17,15 @@ void clearHardSave() => impl.clearHardSave();
 String? getAutosaveTimestamp() => impl.getAutosaveTimestamp();
 
 String? getHardSaveTimestamp() => impl.getHardSaveTimestamp();
+
+void saveCourseData(String content) => impl.saveCourseData(content);
+
+String? loadCourseData() => impl.loadCourseData();
+
+void clearCourseData() => impl.clearCourseData();
+
+void savePeopleData(String content) => impl.savePeopleData(content);
+
+String? loadPeopleData() => impl.loadPeopleData();
+
+void clearPeopleData() => impl.clearPeopleData();
