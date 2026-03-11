@@ -254,5 +254,9 @@ void main() {
     showButton =
         tester.widget(find.widgetWithText(ElevatedButton, 'Show Coord(s)'));
     expect(showButton.onPressed, isNotNull);
+    // verify that tapping actually invokes the callback
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Show Coord(s)'));
+    await tester.pumpAndSettle();
+    expect(called, isTrue);
   });
 }
