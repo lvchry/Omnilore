@@ -8,7 +8,7 @@ void main() {
     // Test that button labels update correctly based on coordinator mode
 
     // In 'none' mode, button should say "Set C and CC"
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(const MaterialApp(
       home: NamesDisplayMode(
         onShowSplits: null,
         onImplSplit: null,
@@ -23,7 +23,7 @@ void main() {
     expect(find.text('Set CC1 and CC2'), findsOneWidget);
 
     // In 'main' mode, Set C button should say "Confirm"
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(const MaterialApp(
       home: NamesDisplayMode(
         onShowSplits: null,
         onImplSplit: null,
@@ -38,7 +38,7 @@ void main() {
     expect(find.text('Set C and CC'), findsNothing);
 
     // In 'equal' mode, Set CC button should say "Confirm"
-    await tester.pumpWidget(MaterialApp(
+    await tester.pumpWidget(const MaterialApp(
       home: NamesDisplayMode(
         onShowSplits: null,
         onImplSplit: null,
