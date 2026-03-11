@@ -28,7 +28,8 @@ class ClassNameDisplay extends StatefulWidget {
       this.currentSplitGroupSelected,
       this.onMovePerson,
       this.onSelectSplitGroup,
-      this.onCancelSplitPreview})
+      this.onCancelSplitPreview,
+      this.coordinatorMode = 'none'})
       : super(key: key);
 
   final RowType currentRow;
@@ -41,6 +42,7 @@ class ClassNameDisplay extends StatefulWidget {
   final void Function(String person, int fromGroup, int toGroup)? onMovePerson;
   final void Function(int groupNum)? onSelectSplitGroup;
   final void Function()? onCancelSplitPreview;
+  final String coordinatorMode; // 'none', 'main', or 'equal'
 
   @override
   State<StatefulWidget> createState() => ClassNameDisplayState();
@@ -49,78 +51,142 @@ class ClassNameDisplay extends StatefulWidget {
 class ClassNameDisplayState extends State<ClassNameDisplay> {
   late List<bool> _selected =
       List<bool>.filled(widget.people.length, false, growable: false);
+  
+  // For coordinator selection mode
+  String? _selectedC; // Person selected as C
+  String? _selectedCC; // Person selected as CC
+  bool _showingCoordinators = false; // Toggle for Show Coords
 
   void clearSelection() {
     for (int i = 0; i < _selected.length; i++) {
       _selected[i] = false;
     }
+    _selectedC = null;
+    _selectedCC = null;
   }
 
-  void _select(String person) {
-    for (int i = 0; i < widget.people.length; i++) {
-      if (widget.people[i] == person) {
-        _selected[i] = true;
+  /// Select or deselect a person as C in coordinator mode
+  void selectCoordinatorC(String person) {
+    setState(() {
+      if (_selectedC == person) {
+        // Deselect if clicking same person
+        _selectedC = null;
+      } else {
+        _selectedC = person;
       }
-    }
+    });
   }
-
-  List<String> _getSelected() {
-    var result = <String>[];
-    for (int i = 0; i < widget.people.length; i++) {
-      if (_selected[i]) {
-        result.add(widget.people[i]);
+  
+  /// Select or deselect a person as CC in coordinator mode
+  void selectCoordinatorCC(String person) {
+    setState(() {
+      if (_selectedCC == person) {
+        // Deselect if clicking same person
+        _selectedCC = null;
+      } else {
+        _selectedCC = person;
       }
-    }
-    return result;
+    });
+  }
+  
+  /// Get the selected C coordinator
+  String? getSelectedC() => _selectedC;
+  
+  /// Get the selected CC coordinator
+  String? getSelectedCC() => _selectedCC;
+  
+  /// Clear coordinator selections
+  void clearCoordinatorSelections() {
+    setState(() {
+      _selectedC = null;
+      _selectedCC = null;
+      _showingCoordinators = false;
+    });
   }
 
-  /// Display the coordinators for the current course
+  /// Display/hide the coordinators for the current course (toggle)
   void showCoordinators() {
-    Coordinators? coordinator =
-        widget.schedule.courseControl.getCoordinators(widget.currentClass!);
-    if (coordinator != null) {
-      setState(() {
-        clearSelection();
-        for (var person in coordinator.coordinators) {
-          if (person.isNotEmpty) {
-            _select(person);
-          }
-        }
-      });
+    // don't override any in-progress selection; user should confirm or
+    // cancel their current picks before looking at existing assignments.
+    if (widget.coordinatorMode != 'none') {
+      return;
     }
+
+    setState(() {
+      if (_showingCoordinators) {
+        // Hide coordinators
+        clearCoordinatorSelections();
+        _showingCoordinators = false;
+      } else {
+        // Show coordinators
+        Coordinators? coordinator =
+            widget.schedule.courseControl.getCoordinators(widget.currentClass!);
+        if (coordinator != null) {
+          clearCoordinatorSelections();
+          if (coordinator.equal) {
+            // Equal coordinator mode
+            _selectedC = coordinator.coordinators[0];
+            if (coordinator.coordinators[1].isNotEmpty) {
+              _selectedCC = coordinator.coordinators[1];
+            }
+          } else {
+            // Main/Co coordinator mode
+            _selectedC = coordinator.coordinators[0];
+            if (coordinator.coordinators[1].isNotEmpty) {
+              _selectedCC = coordinator.coordinators[1];
+            }
+          }
+          _showingCoordinators = true;
+        }
+      }
+    });
   }
 
-  /// Set the selected as the main coordinator or CC
+  /// Set the selected C and CC
   void setMainCoordinator() {
-    var peopleSelected = _getSelected();
-    assert(peopleSelected.length < 2);
-    if (peopleSelected.isNotEmpty) {
+    widget.schedule.courseControl.clearCoordinators(widget.currentClass!);
+    if (_selectedC != null) {
       try {
         widget.schedule.courseControl
-            .setMainCoCoordinator(widget.currentClass!, peopleSelected[0]);
+            .setMainCoCoordinator(widget.currentClass!, _selectedC!);
+      } on Exception catch (e) {
+        Utils.showPopUp(context, 'Set C/CC error', e.toString());
+      }
+    }
+    if (_selectedCC != null) {
+      try {
+        widget.schedule.courseControl
+            .setMainCoCoordinator(widget.currentClass!, _selectedCC!);
       } on Exception catch (e) {
         Utils.showPopUp(context, 'Set C/CC error', e.toString());
       }
     }
     setState(() {
-      clearSelection();
+      clearCoordinatorSelections();
     });
   }
 
-  /// Set the selected as CC1 or CC2
+  /// Set the selected CC1 and CC2
   void setCoCoordinator() {
-    var peopleSelected = _getSelected();
-    assert(peopleSelected.length < 2);
-    if (peopleSelected.isNotEmpty) {
+    widget.schedule.courseControl.clearCoordinators(widget.currentClass!);
+    if (_selectedC != null) {
       try {
         widget.schedule.courseControl
-            .setEqualCoCoordinator(widget.currentClass!, peopleSelected[0]);
+            .setEqualCoCoordinator(widget.currentClass!, _selectedC!);
+      } on Exception catch (e) {
+        Utils.showPopUp(context, 'Set CC1/CC2 error', e.toString());
+      }
+    }
+    if (_selectedCC != null) {
+      try {
+        widget.schedule.courseControl
+            .setEqualCoCoordinator(widget.currentClass!, _selectedCC!);
       } on Exception catch (e) {
         Utils.showPopUp(context, 'Set CC1/CC2 error', e.toString());
       }
     }
     setState(() {
-      clearSelection();
+      clearCoordinatorSelections();
     });
   }
 
@@ -212,6 +278,19 @@ class ClassNameDisplayState extends State<ClassNameDisplay> {
             for (int i = 0; i < widget.people.length; i++)
               ElevatedButton(
                   style: (() {
+                    String person = widget.people[i];
+                    // Coordinator mode colors
+                    if (person == _selectedC) {
+                      return ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.red);
+                    }
+                    if (person == _selectedCC) {
+                      return ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green);
+                    }
+                    // Regular mode colors
                     if (_selected[i] == true) {
                       return ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -236,15 +315,64 @@ class ClassNameDisplayState extends State<ClassNameDisplay> {
                           widget.currentRow == RowType.className ||
                           widget.isShowingSplitPreview
                       ? () {
-                          setState(() {
-                            if (widget.currentRow == RowType.resultingClass ||
-                                widget.isShowingSplitPreview) {
-                              _selected[i] = !_selected[i];
-                            } else {
-                              clearSelection();
-                              _selected[i] = true;
+                          String person = widget.people[i];
+                          if (widget.currentRow == RowType.className &&
+                              widget.coordinatorMode != 'none') {
+                            // In coordinator selection mode
+                            if (_selectedC == null) {
+                              selectCoordinatorC(person);
+                            } else if (_selectedCC == null) {
+                              selectCoordinatorCC(person);
+                            } else if (_selectedC == person) {
+                              selectCoordinatorC(person);
+                            } else if (_selectedCC == person) {
+                              selectCoordinatorCC(person);
                             }
-                          });
+                          } else if (_showingCoordinators &&
+                              widget.currentRow == RowType.className &&
+                              widget.currentClass != null) {
+                            // When coordinators are being shown, tapping one of the
+                            // highlighted names should remove the coordinator
+                            // assignment entirely.  This gives the user a quick way
+                            // to "delete" the current C/CC pair without having to
+                            // switch back into selection mode.
+                            Coordinators? coords =
+                                widget.schedule.courseControl
+                                    .getCoordinators(widget.currentClass!);
+                            if (coords != null &&
+                                (person == coords.coordinators[0] ||
+                                    person == coords.coordinators[1])) {
+                              widget.schedule.courseControl
+                                  .clearCoordinators(widget.currentClass!);
+                              setState(() {
+                                clearCoordinatorSelections();
+                                _showingCoordinators = false;
+                              });
+                              // early return to avoid running regular mode below
+                              return;
+                            }
+                            // fall through to regular selection if not a coord
+                            setState(() {
+                              if (widget.currentRow == RowType.resultingClass ||
+                                  widget.isShowingSplitPreview) {
+                                _selected[i] = !_selected[i];
+                              } else {
+                                clearSelection();
+                                _selected[i] = true;
+                              }
+                            });
+                          } else {
+                            // Regular selection mode
+                            setState(() {
+                              if (widget.currentRow == RowType.resultingClass ||
+                                  widget.isShowingSplitPreview) {
+                                _selected[i] = !_selected[i];
+                              } else {
+                                clearSelection();
+                                _selected[i] = true;
+                              }
+                            });
+                          }
                         }
                       : null,
                   child: Text(

@@ -10,7 +10,8 @@ class NamesDisplayMode extends StatelessWidget {
       required this.onImplSplit,
       required this.onShowCoords,
       required this.onSetC,
-      required this.onSetCC})
+      required this.onSetCC,
+      this.coordinatorMode = 'none'})
       : super(key: key);
 
   final void Function()? onShowSplits;
@@ -18,9 +19,13 @@ class NamesDisplayMode extends StatelessWidget {
   final void Function()? onShowCoords;
   final void Function()? onSetC;
   final void Function()? onSetCC;
+  final String coordinatorMode; // 'none', 'main', or 'equal'
 
   @override
   Widget build(BuildContext context) {
+    String setcLabel = coordinatorMode == 'main' ? 'Confirm' : 'Set C and CC';
+    String setccLabel = coordinatorMode == 'equal' ? 'Confirm' : 'Set CC1 and CC2';
+    
     return Container(
         color: themeColors['KindaBlue'],
         child:
@@ -36,9 +41,9 @@ class NamesDisplayMode extends StatelessWidget {
               onPressed: onImplSplit, child: const Text('Imp. Splits')),
           ElevatedButton(
               onPressed: onShowCoords, child: const Text('Show Coord(s)')),
-          ElevatedButton(onPressed: onSetC, child: const Text('Set C and CC')),
+          ElevatedButton(onPressed: onSetC, child: Text(setcLabel)),
           ElevatedButton(
-              onPressed: onSetCC, child: const Text('Set CC1 and CC2')),
+              onPressed: onSetCC, child: Text(setccLabel)),
         ]));
   }
 }

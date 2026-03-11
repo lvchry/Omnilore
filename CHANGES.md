@@ -24,6 +24,16 @@ but not others.
 and CC2".
   a. To set main and co coordinators, select a person, click "Set C and CC",
   select another, and then click "Set C and CC".
+
+  * Clicking the "Set C and CC" button a second time now clears any
+    previous coordinator selection before starting a new assignment, allowing
+    both C and CC to be reset. Previously the old main coordinator remained
+    highlighted which meant only the co-coordinator could be changed.
+  * The same clearing behavior is now performed when re-entering the
+    "Set CC1 and CC2" mode so that both co-coordinators can be picked anew.
+  * While coordinators are being shown, tapping a highlighted name will now
+    delete the entire coordinator assignment for the course.  This provides a
+    quick way to remove C/CC without switching back into selection mode.
   b. To set two co coordinators, select a person, click "Set CC1 and CC2",
   select another, and then click "Set CC1 and CC2".
 

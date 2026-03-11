@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_menu/flutter_menu.dart';
 import 'package:omnilore_scheduler/model/change.dart';
-import 'package:omnilore_scheduler/model/coordinators.dart';
+
 import 'package:omnilore_scheduler/model/state_of_processing.dart';
 import 'package:omnilore_scheduler/scheduling.dart';
 import 'package:file_picker/file_picker.dart';
@@ -55,8 +55,9 @@ class _ScreenState extends State<Screen> {
   List<List<String>> curClusters = [];
   List<bool> droppedList = List<bool>.filled(14, false, growable: true);
   List<int> scheduleData = List<int>.filled(14, -1, growable: false);
-  int mainSelected = 0;
-  int coSelected = 0;
+  
+  // Coordinator selection mode: 'none', 'main', or 'equal'
+  String coordinatorMode = 'none';
 
   // Autosave state
   Timer? _autosaveTimer;
@@ -841,29 +842,9 @@ class _ScreenState extends State<Screen> {
                           curClassRoster = schedule.overviewData
                               .getPeopleForResultingClass(course)
                               .toList();
-                          // Update coordinator data
-                          Coordinators? coordinators =
-                              schedule.courseControl.getCoordinators(course);
-                          setState(() {
-                            if (coordinators == null) {
-                              mainSelected = 0;
-                              coSelected = 0;
-                            } else if (coordinators.equal) {
-                              mainSelected = 0;
-                              if (coordinators.coordinators[1].isNotEmpty) {
-                                coSelected = 2;
-                              } else {
-                                coSelected = 1;
-                              }
-                            } else {
-                              coSelected = 0;
-                              if (coordinators.coordinators[1].isNotEmpty) {
-                                mainSelected = 2;
-                              } else {
-                                mainSelected = 1;
-                              }
-                            }
-                          });
+                          // Reset coordinator selection mode when switching courses
+                          coordinatorMode = 'none';
+                          _classNameDisplayKey.currentState?.clearCoordinatorSelections();
                           break;
                         case RowType.firstChoice:
                           curClassRoster = schedule.overviewData
@@ -994,7 +975,8 @@ class _ScreenState extends State<Screen> {
                           _updateSplitPreviewRoster();
                         });
                       },
-                      onCancelSplitPreview: _cancelSplitPreview),
+                      onCancelSplitPreview: _cancelSplitPreview,
+                      coordinatorMode: coordinatorMode),
                 )
               ],
             ),
@@ -1036,6 +1018,7 @@ class _ScreenState extends State<Screen> {
                               }
                             : null),
                     onShowCoords: currentRow == RowType.className &&
+                            coordinatorMode == 'none' &&
                             (schedule.getStateOfProcessing() ==
                                     StateOfProcessing.coordinator ||
                                 schedule.getStateOfProcessing() ==
@@ -1048,32 +1031,54 @@ class _ScreenState extends State<Screen> {
                         : null,
                     onSetC: currentRow == RowType.className &&
                             schedule.getStateOfProcessing() ==
-                                StateOfProcessing.coordinator &&
-                            coSelected == 0 &&
-                            mainSelected < 2
+                                StateOfProcessing.coordinator
                         ? () {
                             ClassNameDisplayState state =
                                 _classNameDisplayKey.currentState!;
-                            state.setMainCoordinator();
-                            setState(() {
-                              mainSelected += 1;
-                            });
+                            if (coordinatorMode == 'none') {
+                              // Start main coordinator selection mode
+                              // clear any existing selections so the user can
+                              // pick both C and CC from scratch when re-entering
+                              // this mode. Without this the previous main
+                              // coordinator would remain highlighted and only
+                              // the co-coordinator could be changed.
+                              state.clearCoordinatorSelections();
+                              setState(() {
+                                coordinatorMode = 'main';
+                              });
+                            } else if (coordinatorMode == 'main') {
+                              // Confirm and apply selections
+                              state.setMainCoordinator();
+                              setState(() {
+                                coordinatorMode = 'none';
+                              });
+                            }
                           }
                         : null,
                     onSetCC: currentRow == RowType.className &&
                             schedule.getStateOfProcessing() ==
-                                StateOfProcessing.coordinator &&
-                            mainSelected == 0 &&
-                            coSelected < 2
+                                StateOfProcessing.coordinator
                         ? () {
                             ClassNameDisplayState state =
                                 _classNameDisplayKey.currentState!;
-                            state.setCoCoordinator();
-                            setState(() {
-                              coSelected += 1;
-                            });
+                            if (coordinatorMode == 'none') {
+                              // Start equal coordinator selection mode
+                              // clear previous selections so both CC1 and CC2 can
+                              // be chosen anew when re-entering this mode.
+                              state.clearCoordinatorSelections();
+                              setState(() {
+                                coordinatorMode = 'equal';
+                              });
+                            } else if (coordinatorMode == 'equal') {
+                              // Confirm and apply selections
+                              state.setCoCoordinator();
+                              setState(() {
+                                coordinatorMode = 'none';
+                              });
+                            }
                           }
                         : null,
+                    coordinatorMode: coordinatorMode,
                   ),
                 )
               ],
