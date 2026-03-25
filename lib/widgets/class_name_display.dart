@@ -56,6 +56,7 @@ class ClassNameDisplayState extends State<ClassNameDisplay> {
   String? _selectedC; // Person selected as C
   String? _selectedCC; // Person selected as CC
   bool _showingCoordinators = false; // Toggle for Show Coords
+  bool _showingEqualCoordinators = false; // true when shown pair is CC1/CC2
 
   void clearSelection() {
     for (int i = 0; i < _selected.length; i++) {
@@ -101,6 +102,7 @@ class ClassNameDisplayState extends State<ClassNameDisplay> {
       _selectedC = null;
       _selectedCC = null;
       _showingCoordinators = false;
+      _showingEqualCoordinators = false;
     });
   }
 
@@ -117,12 +119,14 @@ class ClassNameDisplayState extends State<ClassNameDisplay> {
         // Hide coordinators
         clearCoordinatorSelections();
         _showingCoordinators = false;
+        _showingEqualCoordinators = false;
       } else {
         // Show coordinators
         Coordinators? coordinator =
             widget.schedule.courseControl.getCoordinators(widget.currentClass!);
         if (coordinator != null) {
           clearCoordinatorSelections();
+          _showingEqualCoordinators = coordinator.equal;
           if (coordinator.equal) {
             // Equal coordinator mode
             _selectedC = coordinator.coordinators[0];
@@ -280,10 +284,15 @@ class ClassNameDisplayState extends State<ClassNameDisplay> {
                   style: (() {
                     String person = widget.people[i];
                     // Coordinator mode colors
+                    bool isEqualCoordinatorDisplay =
+                        widget.coordinatorMode == 'equal' ||
+                            (_showingCoordinators && _showingEqualCoordinators);
                     if (person == _selectedC) {
                       return ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: Colors.red);
+                          backgroundColor: isEqualCoordinatorDisplay
+                              ? Colors.green
+                              : Colors.red);
                     }
                     if (person == _selectedCC) {
                       return ElevatedButton.styleFrom(

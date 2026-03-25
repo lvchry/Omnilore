@@ -50,11 +50,22 @@ void main() {
 
     expect(scheduling.getStateOfProcessing(), StateOfProcessing.coordinator);
 
+    var assignedEqualCoordinatorCourse = false;
     for (var course in goCourses) {
       var resultingClass = scheduling.overviewData.getPeopleForResultingClass(course);
+      var resultingPeople = resultingClass.toList(growable: false);
       expect(resultingClass, isNotEmpty,
           reason: 'Course $course should have at least one participant.');
-      scheduling.courseControl.setMainCoCoordinator(course, resultingClass.first);
+      if (!assignedEqualCoordinatorCourse && resultingPeople.length >= 2) {
+        scheduling.courseControl
+            .setEqualCoCoordinator(course, resultingPeople[0]);
+        scheduling.courseControl
+            .setEqualCoCoordinator(course, resultingPeople[1]);
+        assignedEqualCoordinatorCourse = true;
+      } else {
+        scheduling.courseControl
+            .setMainCoCoordinator(course, resultingPeople.first);
+      }
     }
 
     expect(scheduling.getStateOfProcessing(), StateOfProcessing.output);
@@ -64,6 +75,8 @@ void main() {
     var mailMerge = scheduling.outputMMToString();
 
     expect(rosterWithCc, contains('(C)'));
+    expect(rosterWithCc, contains('(CC1)'));
+    expect(rosterWithCc, contains('(CC2)'));
     expect(rosterWithCc, contains('Mon'));
     expect(rosterWithPhone, contains('Mon'));
     expect(mailMerge.trim().split('\n').length, scheduling.getNumPeople());

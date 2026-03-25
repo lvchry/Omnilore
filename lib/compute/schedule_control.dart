@@ -32,8 +32,12 @@ class ScheduleControl {
         _schedule[i].clear();
       }
     }
-    // If people or course has changed, compute unavailables
-    if (change == Change.course || change == Change.people) {
+    // Recompute unavailability matrix whenever resulting rosters may change.
+    // Resulting rosters are affected by course/people/drop/schedule changes.
+    if (change == Change.course ||
+        change == Change.people ||
+        change == Change.drop ||
+        change == Change.schedule) {
       _unavailables.clear();
       for (var course in _courses.getCodes()) {
         _unavailables[course] = List<int>.filled(20, 0);
