@@ -196,4 +196,45 @@ void main() {
           hasMessage('Min: 20 is larger than max: 10')
         ])));
   });
+
+  test('Coordinator assignment semantics support parity workflows', () async {
+    var scheduling = Scheduling();
+    await scheduling.loadCourses('test/resources/course_split.txt');
+    await scheduling.loadPeople('test/resources/people_schedule.txt');
+
+    scheduling.courseControl.setMainCoCoordinator('AIN', 'Alice Example');
+    scheduling.courseControl.setMainCoCoordinator('AIN', 'Bob Example');
+
+    var unequal = scheduling.courseControl.getCoordinators('AIN');
+    expect(unequal, isNotNull);
+    expect(unequal!.equal, isFalse);
+    expect(unequal.coordinators, ['Alice Example', 'Bob Example']);
+
+    expect(
+        () => scheduling.courseControl.setEqualCoCoordinator('AIN', 'Carol'),
+        throwsA(allOf([
+          isA<InvalidArgument>(),
+          hasMessage(
+              'Invalid argument: Cannot set equal co-coordinator with a coordinator set')
+        ])));
+
+    scheduling.courseControl.clearCoordinators('AIN');
+    expect(scheduling.courseControl.getCoordinators('AIN'), isNull);
+
+    scheduling.courseControl.setEqualCoCoordinator('AIN', 'Carol Example');
+    scheduling.courseControl.setEqualCoCoordinator('AIN', 'Dan Example');
+
+    var equal = scheduling.courseControl.getCoordinators('AIN');
+    expect(equal, isNotNull);
+    expect(equal!.equal, isTrue);
+    expect(equal.coordinators, ['Carol Example', 'Dan Example']);
+
+    expect(
+        () => scheduling.courseControl.setMainCoCoordinator('AIN', 'Erin'),
+        throwsA(allOf([
+          isA<InvalidArgument>(),
+          hasMessage(
+              'Invalid argument: Cannot set co-coordinator with equal coordinators set')
+        ])));
+  });
 }

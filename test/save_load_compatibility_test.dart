@@ -31,6 +31,29 @@ Future<List<String>> _driveToOutput(Scheduling scheduling) async {
   return goCourses;
 }
 
+Future<List<String>> _driveToOutputWithEqualCoordinatorCourse(
+    Scheduling scheduling) async {
+  final goCourses = await _driveToOutput(scheduling);
+
+  final targetCourse = goCourses.first;
+  final targetPeople = scheduling.overviewData
+      .getPeopleForResultingClass(targetCourse)
+      .take(2)
+      .toList();
+  expect(targetPeople.length, 2,
+      reason:
+          'Expected $targetCourse to have at least two people for equal coordinator coverage.');
+
+  scheduling.courseControl.clearCoordinators(targetCourse);
+  scheduling.courseControl
+      .setEqualCoCoordinator(targetCourse, targetPeople[0]);
+  scheduling.courseControl
+      .setEqualCoCoordinator(targetCourse, targetPeople[1]);
+
+  expect(scheduling.getStateOfProcessing(), StateOfProcessing.output);
+  return goCourses;
+}
+
 String _normalize(String content) {
   return content.endsWith('\n') ? content : '$content\n';
 }
@@ -119,5 +142,33 @@ void main() {
     expect(restored.getNumPeople(), source.getNumPeople());
     expect(restored.getCourseCodes().length, source.getCourseCodes().length);
     expect(restored.getStateOfProcessing(), StateOfProcessing.output);
+  });
+
+  test('Coordinator mode and names survive save/load round-trip', () async {
+    final courseText =
+        _normalize(File('test/resources/course_split.txt').readAsStringSync());
+    final peopleText = _normalize(
+        File('test/resources/people_schedule.txt').readAsStringSync());
+
+    final source = Scheduling();
+    await source.loadCoursesFromBytes(utf8.encode(courseText));
+    await source.loadPeopleFromBytes(utf8.encode(peopleText));
+    final goCourses = await _driveToOutputWithEqualCoordinatorCourse(source);
+    final targetCourse = goCourses.first;
+    final sourceCoordinators =
+        source.courseControl.getCoordinators(targetCourse)!;
+
+    final legacyStateOnly = source.exportStateToString();
+
+    final restored = Scheduling();
+    await restored.loadCoursesFromBytes(utf8.encode(courseText));
+    await restored.loadPeopleFromBytes(utf8.encode(peopleText));
+    restored.loadStateFromBytes(utf8.encode(legacyStateOnly));
+
+    final restoredCoordinators =
+        restored.courseControl.getCoordinators(targetCourse)!;
+    expect(restored.getStateOfProcessing(), StateOfProcessing.output);
+    expect(restoredCoordinators.equal, isTrue);
+    expect(restoredCoordinators.coordinators, sourceCoordinators.coordinators);
   });
 }
