@@ -208,6 +208,7 @@ class CourseControl {
   /// Clear current coordinator assignment
   void clearCoordinators(String course) {
     _coordinatorsMap.remove(course);
+    _scheduling.compute(Change.misc);
   }
 
   /// Check if all courses have coordinators assigned
