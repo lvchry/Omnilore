@@ -364,9 +364,12 @@ class Scheduling {
       for (var person in people) {
         if (person.getName() == cc.coordinators[0] && !cc.equal) {
           content.writeln('${person.getReversedName()} (C)');
-        } else if (person.getName() == cc.coordinators[0] ||
-            person.getName() == cc.coordinators[1]) {
+        } else if (person.getName() == cc.coordinators[1] && !cc.equal) {
           content.writeln('${person.getReversedName()} (CC)');
+        } else if (person.getName() == cc.coordinators[0] && cc.equal) {
+          content.writeln('${person.getReversedName()} (CC1)');
+        } else if (person.getName() == cc.coordinators[1] && cc.equal) {
+          content.writeln('${person.getReversedName()} (CC2)');
         } else {
           content.writeln(person.getReversedName());
         }
