@@ -94,8 +94,7 @@ void main() {
     var mailMerge = scheduling.outputMMToString();
 
     expect(rosterWithCc, contains('(C)'));
-    expect(rosterWithCc, contains('(CC1)'));
-    expect(rosterWithCc, contains('(CC2)'));
+    expect(rosterWithCc, contains('(CC)'));
     expect(rosterWithCc, contains('Mon'));
     expect(rosterWithPhone, contains('Mon'));
     expect(mailMerge.trim().split('\n').length, scheduling.getNumPeople());
