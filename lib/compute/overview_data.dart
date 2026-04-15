@@ -126,16 +126,27 @@ class OverviewData {
     // Check time
     var time = _scheduling.scheduleControl.scheduledTimeFor(course);
     if (time != -1 && !person.availability[time]) {
+      if (!firstChoice) {
+        // Count this person in backup-attempt stats even if this course
+        // is rejected for bad time.
+        _data[course]!.addFromBackup.add(person.getName());
+      }
       _data[course]!.dropTime.add(person.getName());
       return PlacementResult.time;
     }
     if (time != -1 && hasClass[time]) {
+      if (!firstChoice) {
+        _data[course]!.addFromBackup.add(person.getName());
+      }
       _data[course]!.dropDup.add(person.getName());
       return PlacementResult.dup;
     }
     if (_scheduling.courseControl.getSplitMode(course) == SplitMode.limit &&
         _data[course]!.getResultingSize() >=
             _scheduling.courseControl.getMaxClassSize(course)) {
+      if (!firstChoice) {
+        _data[course]!.addFromBackup.add(person.getName());
+      }
       _data[course]!.dropFull.add(person.getName());
       return PlacementResult.full;
     }
@@ -144,6 +155,7 @@ class OverviewData {
       _data[course]!.givenFirstChoices.add(person.getName());
     } else {
       _data[course]!.addFromBackup.add(person.getName());
+      _data[course]!.givenFromBackup.add(person.getName());
     }
     // Update occupied time slot for person
     if (time != -1) {
@@ -348,7 +360,10 @@ class CourseData {
   Set<String> firstChoices = {};
   List<Set<String>> backups = [{}, {}, {}, {}, {}];
   Set<String> givenFirstChoices = {};
+  // Includes backup additions that were later dropped for bad time.
   Set<String> addFromBackup = {};
+  // Successful backup placements that end up in resulting class.
+  Set<String> givenFromBackup = {};
   Set<String> dropTime = {};
   Set<String> dropFull = {};
   Set<String> dropDup = {};
@@ -361,6 +376,7 @@ class CourseData {
     }
     givenFirstChoices.clear();
     addFromBackup.clear();
+    givenFromBackup.clear();
     dropTime.clear();
     dropFull.clear();
     dropDup.clear();
@@ -368,11 +384,11 @@ class CourseData {
 
   /// Get the number of people in the resulting class
   int getResultingSize() {
-    return givenFirstChoices.length + addFromBackup.length;
+    return givenFirstChoices.length + givenFromBackup.length;
   }
 
   /// Get a set of people in the resulting class
   Set<String> getResultingClass() {
-    return givenFirstChoices.union(addFromBackup);
+    return givenFirstChoices.union(givenFromBackup);
   }
 }

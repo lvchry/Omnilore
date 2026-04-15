@@ -919,18 +919,31 @@ class _ScreenState extends State<Screen> {
                     compute(Change.drop);
                   },
                   onSchedule: (String course, int timeIndex) {
+                    var deselected = false;
                     setState(() {
                       currentClass = course;
                       schedule.splitControl.resetState();
-                      schedule.scheduleControl
-                          .schedule(currentClass!, timeIndex);
+                      var currentTime =
+                          schedule.scheduleControl.scheduledTimeFor(course);
+                      if (currentTime == timeIndex) {
+                        schedule.scheduleControl.unschedule(course, timeIndex);
+                        deselected = true;
+                      } else {
+                        schedule.scheduleControl
+                            .schedule(currentClass!, timeIndex);
+                      }
 
                       List<String> tempList = curClassRoster.toList();
                       tempList.sort(
                           (a, b) => a.split(' ')[1].compareTo(b.split(' ')[1]));
                       curClassRoster = tempList;
-                      compute(Change.schedule);
                     });
+                    if (deselected) {
+                      // schedule() recomputes backend state internally, but
+                      // unschedule() does not. Recompute here for deselection.
+                      schedule.compute(Change.schedule);
+                    }
+                    compute(Change.schedule);
                   })
             ],
           )),
