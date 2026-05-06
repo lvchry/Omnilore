@@ -159,8 +159,14 @@ class ScheduleControl {
   }
 
   /// Check if all classes have been scheduled
+  /// Returns true if there are no courses to schedule (all dropped)
+  /// or if all active courses have been scheduled
   bool allClassScheduled() {
-    for (var course in _scheduling.courseControl.getGo()) {
+    var goCourses = _scheduling.courseControl.getGo().toList();
+    if (goCourses.isEmpty) {
+      return true; // No courses to schedule, so all are "scheduled"
+    }
+    for (var course in goCourses) {
       if (!_scheduled.contains(course)) {
         return false;
       }

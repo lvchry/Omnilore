@@ -1,0 +1,176 @@
+CourseFile:
+AER	When The Heavens Went on Sale	When the Heavens Went on Sale, by Ashlee Vance
+BSB	Birds, Sex and Beauty: The Extraordinary Implications . . . 	Birds, Sex and Beauty: The extraordinary implications of . . . , by Matt Ridley
+CIA	The Mission: The CIA in the 21 Century	The Mission: The CIA in the 21 Century, by Tim Weiner
+COP	Shielded: How the Police Became Untouchable	Shielded: How the Police Became Untouchable, by Joanna Schwartz
+CUR	Current Events - In Person	No Common Reading
+DIN	A History of the World in 10 Dinners: . . . In Person	A History of the World in 10 Dinners: . . . , by Victoria Flexner
+DOC	Very Recent Documentaries	No Common Reading
+ENL	The Enlightenment	Fire and Light: How the Enlightenment . . . , by James MacGregor Burns
+FLM	Award-Winning Foreign Films	No Common Reading
+GAR	Waste Wars: The Wild Afterlife of Your Trash	Waste Wars: The Wild Afterlife of Your Trash, by Alexander Clapp
+HIS	Erasing History	Erasing History, by Jason Stanley
+HIT	In The Garden of Beasts	In the Garden of Beasts: Love, Terror, and . . . in Hitlers Berlin, by Eric Larson
+IND	. . . The Epic Story of the Indian Wars for the American West	The Earth Is Weeping: The Epic Story of the Indian Wars . . . , by Peter Cozzens
+LIE	A Field Guide to Lies: Critical Thinking . . .	A Field Guide to Lies: Critical Thinking with . . . , by Daniel J. Levitin
+LIV	Outlive: The Science and Art of Longevity - In Person	Outlive: The Science and Art of Longevity, by Peter Attia MD
+MNE	MINE	Mine: How The Hidden Rules of Ownership Control . . . , by Michael Heller
+MUS	My Favorite Musicians - In Person	No Common Reading
+NYF	100 years of New Yorker Fiction	A Century of Fiction in the New Yorker, edited by Deborah Treisman
+OHP	Best Short Stories 2025: O. Henry Prize Winners - In Person	The Best Short Stories 2025: The O. Henry Prize Winners
+TBS	The Bright Side	The Bright Side: How Optimists Change . . . , by Sumit Paul-Choudhury
+TED	TED Talks - Ideas Worth Spreading - In Person	No Common Reading
+TLE	Tall Tales - In Person	No Common Reading
+TSC	The Sirens Call - In Person	The Sirens Call: How Attention Became the Worlds . . . , by Chris Hayes
+TYR	On Tyranny: Twenty Lessons from the Twentieth Century	On Tyranny: Twenty Lessons from the Twentieth Century, by Timothy Snyder
+PeopleFile:
+Affonso	Jane	995-4943	2	3		3		3		3		3		TSC	MNE	GAR	DIN			175
+Ageson	Martin	714-747-3147	0																	157
+Anderson	Lynn	357-1155	0																	126
+Bacinski	Bob	424-251-4210	3			1								AER	BSB	CIA	DOC	GAR	HIS	65
+Bailey	Brian	424-251-2748	1											IND	TBS					123
+Bailey	Joann	316-7889	1											TBS	IND					124
+Burress	Ann	270-3955	1											OHP	TED					70
+Bichlmeier	Jerry	874-6643	1											TED	TLE					158
+Bilezikjian	Berta	541-0705	1	3		3		3		3		3		ENL						66
+Black	Ralph	971-6766	1	3		3		3		3		3		CUR	OHP	LIV				59
+Bosch	Dennis	381-9187	2											DIN	LIV	CUR	TYR	TED	TLE	168
+Brashear	Marilyn	907 888-0527	1	3	3	3						3	3	FLM	DOC	TED				47
+Brodsky	Clifford	483-3119	3											CIA	ENL	IND				148
+Brown	Elizabeth	270-2580	1			3	3			1				HIT	FLM	DOC	NYF	OHP	TBS	16
+Brown	Fran	377-5252	1	3	2	3	3	3	3	3	3	3	1	DIN	NYF	DOC				127
+Brown	Janet	 528-7540	0																	55
+Brown	Larry	940-7048	2	3				3						ENL	TYR	HIT	TBS	IND	HIS	64
+Burress	Mary Ann	227-6472	1											OHP	TED					169
+Byrne	Elizabeth	773-351-0518	0		3		3				3									29
+Carmody	Jack	949-235-2799	1											CUR	OHP					26
+Carter	Judi	404 217-2877	2											BSB	DIN	LIE	TYR	TBS	GAR	22
+Case	Barbara	927-6605	1											TSC	OHP	TLE				34
+Criswell	Leslie	809-4365	4	3		3		3		3		3	3	MUS	TSC	OHP	TYR	TED	LIV	163
+de Angelis	Jean	545-7536	1						1	2				IND	CIA					151
+De Alleaume	Paul	375-5688	1	3	3								3	OHP						86
+DeVenuto	Denise	428-8957	1				2							CIA	ENL	DOC	FLM	TYR	HIS	53
+Digre	Patricia	379-9383	1	3				3				3		ENL	IND					62
+Dolmatz	Shera	948-2552 	1	3	3		3							MNE	GAR	DOC	FLM	DIN		4
+Duthweiler	Sue	509-773-3680	1											ENL						39
+Eggert	Cindy	701-7956	1											TSC	TED					171
+Eggert	Dennis	372-3330	2			1	1							DOC	TED					52
+Ferrera	Bob	650-867-2718	2			3	3							TSC	LIV					74
+Feygin	Michael	619-9541	1											LIE	TBS	FLM				128
+Fisher	Kathleen	378-1228	2	3		3		3		3		3		FLM	DOC					58
+Fitzgerald	Kathleen	373-0946	1											OHP	DIN	MUS				45
+Fitzsimons	Michael	367-3876	2											GAR	OHP	MUS	TBS			20
+Ford	Ralph	372-7476												TYR	IND	LIE	HIS			164
+Freedman	Rande	614-1097	1									3	3	DIN	LIV	DOC	MUS	TBS		149
+Gallipeau	Cathy	874-4743	2			1			3	3				CIA	COP	LIV	TED			153
+Gargaro	Bill	344-9255	2	3		3		3	3	3				OHP	TED					23
+Garrison	Arthur	373-8674	1											CUR						129
+Gilmore	Delores	650-3975	1						3					IND	CIA	TYR				154
+Gleichman	Adele	376-7579	1										3	FLM	DOC					161
+Gleichman	Doug	376-7579	1										3	FLM	DOC					162
+Goergen	Michael	251-1860	1											DIN	FLM	DOC	MNE	NYF	HIS	15
+Golden	Charles	750-8585	1			3								LIE						40
+Goldstein	Frankie	801-8976	2	3		3		3	3	3		3	3	LIV	TED	TSC				72
+Hart	Ruth	375-1851	1											TYR	DOC	TSC	FLM	LIE		31
+Hawkins	Deborah	383-7840 	3			3				1	3			DIN	DOC	LIV	NYF	TYR	ENL	54
+Heron	Marilyn	562-597-4099	1							3				NYF	CIA	BSB				130
+Hershberger	Vickie	218-7329	0																	160
+Howard	Jim	283-4455	2											HIS	ENL	TYR	TSC	CIA	GAR	68
+Hubbard	Amy	713-8052	1											MNE	GAR	DOC	FLM	DIN		80
+Ingalls	Anne	569-9630	1											DOC	FLM					30
+Johnson	Janet	408-5008	2											DIN	AER	LIV	BSB	DOC	HIS	135
+Jones	Sarah	545-4725	1			3	3	3				3	3	DOC	GAR	CIA	TED	TSC		27
+Karel	Joyce	646-241-2342	1	3	3	3		3	3	3		3		TSC	LIV	MNE				131
+Kilcullen	Leslie	951-5091	2							3				DIN	CUR					76
+Kitching	Patti	880-6311	0																	170
+Klineman	Michael	383-1078c	1	3	3					3	3			TLE						134
+Kolas	Rose	781-0636	1	3			3				3	3	3	TED	LIV	TLE	DIN			42
+Kolic	Joan	424 378-2440	2											AER	DIN	MUS				77
+Korman	Dale	944-1701	1		3		3		3		3		3	OHP	MUS					5
+Landau	Marilyn	424/404-7785	1	3	3							3	3	OHP						28
+Laney	Patti	977-9456 	1		3		3		3					DIN						152
+Lau	Mimi	541-9275	0																	81
+Little	Mary Jo	351-5170	1						3				3	LIE	NYF					43
+Lyons	Jack	542-1108 	2											ENL	NYF	OHP				25
+Maehl	Susan	377-7404	1	3	3	3	3					3	3	TSC	LIV					174
+Mansfield	Rich	562-292-8409	2											ENL	MNE	TLE	CIA	LIV	LIE	136
+Martin	Gloria	433-7779	1											TED	DIN					140
+McCaul	Paul	701-5553	1											CIA						137
+McKenzie	Jill	480-5353	0																	18
+McQueary	Karol	200-4789	1											DIN	HIS	DOC	TED	IND	COP	167
+Meyer	Ken	650-3728 	0																	24
+Miller	David	377-3913	0																	173
+Miller	Nancy	367-7060	1	3	3									TLE	LIV	OHP				36
+Miller	Steve	379-5559	2											TED	LIV	CUR	OHP			159
+Minami	Vera	371-2663	2	3	3							3	3	DOC	TBS	TYR	LIE	CIA	ENL	69
+Moite	Sally	377-6790	1					3		3				BSB	ENL	TYR	CIA	GAR	HIS	83
+Moore	Chris	490-7337	1	3	3	3		3	3	3		3	3	CIA						41
+Morgan	Wendy	469-8473	1											TED	DIN					85
+Murphy	Florence 	387-5301	1	3		3		3		3		3	3	TYR	LIV	DOC				138
+Murphy	Kathy	213-952-1311	1											TED	NYF	OHP				165
+Noda	Paula	748-9191	2									3	3	LIV	MUS	NYF	TED	OHP	DOC	14
+North	Jim	490-5235	1											IND	HIT	HIS				75
+North	Judy	490-4293	1											IND	HIT	HIS				51
+Prentice	Dave	404 9553	1											DIN	TSC					56
+Pruetz	Adrian	798-4097 	2											DOC	CUR	LIV	OHP			63
+Pruetz	Rick	749-5535	2											FLM	TLE	MUS	DOC			6
+Purcell	Christine	283-7323	2					3	3			3		BSB	DIN	MUS	FLM			3
+Reif	Judith	818-421-6755	1											NYF	IND					176
+Reilly	Richard	951-6368	2	3	3	3		3		3		3	3	DOC	FLM	NYF	TYR			12
+Robins	Doug	372-1365	1	3		3		3		3		3		DOC	AER					139
+Rook	Judi	633-3292	1									3	3	TSC	LIV					156
+Rosen	Ace	378-0114	2											LIE	TYR	CUR				125
+Rosen	Pauline	561-9766	2											LIV	DIN	CUR	FLM			44
+Ross	Diane	818-516-9943 	1		1	3		3	3					IND	HIT	OHP	LIV			17
+Salibian	Haygo	818-426-8821	3	3		3		3		3		3		DOC	FLM	MUS	AER			141
+Schettler	Leslie	541-857-6387	2			3					3	1		AER	FLM	TYR	HIT	HIS		147
+Schmutz	Francoise	424-521-2064	2											NYF	GAR	DOC				155
+Shackle	Peter	847-736-4771	1											TSC						61
+Simpson	John	292-1902	1											CIA						67
+Sims	David	796-6662 	1											BSB	GAR	FLM				142
+Sims	Dayla	944-5286	1											BSB	GAR	FLM				71
+Solomita	Philip	 378-0765	1											IND	CIA	AER	DOC	LIE	ENL	10
+Spillane	Lori	645-1431	2											OHP	TLE					11
+Spillane	Rick	645-1431	4											BSB	CUR	OHP	TED			13
+Steinkamp	Cheryl	502-9436	3											DIN	TED	OHP	DOC	NYF	MUS	180
+Steinmetz	Jean	864-6437	1	3	3	2		3			2	3		TLE	ENL	OHP				178
+Stern	Dan	408-2875	1											ENL						32
+Strauss	Susan	749-6263	3											DIN	CUR	TLE	MUS	LIV	TSC	78
+Svensrud	Carmen	722-9968	2											FLM	NYF	CIA	GAR	IND	TYR	73
+Thelen	Margaret	545-0203	0																	166
+Tlougan	Donald	833-3987	1											CIA	HIS	LIE	TYR			143
+Vincent	Tom	534-2256	1											ENL						46
+Watson	Mary	373-5431	6											AER	BSB	DOC	HIS	IND	HIT	60
+West	Jerry	908-285-8200	1			3	3		3				3	COP	ENL	CIA				179
+Wetmore	Evans	310-713-5866	1	3	3			3	3					TSC						84
+Wheaton	Selma	766-8050	1							3	3			TED						177
+Wilson	Jeanne	480-4913	1	3				3			3		3	FLM	NYF	DIN				144
+Wong	Donna	738-9620	1											CIA	ENL	GAR	HIS	HIT		145
+Young	Larry	376-9494	1											TSC	TED	NYF				146
+Zhu	Mingmin	904-303-4095	3											DIN	LIV	CUR				150
+Zimmerman	Kathy	487-7793	1	3		3		3		3		3		TLE	TED	MUS				35
+Zimmerman	Scott	316-1619	2	3		3		3		3		3		TED	FLM	TLE	DIN	CIA	OHP	21
+																				57
+																				33
+																				48
+																				49Setting:
+Min: 8
+Max: 19
+
+Course size:
+
+Drop:
+COP
+AER
+GAR
+HIS
+HIT
+TBS
+
+Limit:
+
+Split:
+
+Schedule:
+
+Coordinator:

@@ -218,6 +218,12 @@ class SplitControl {
         .map((person) => person.getName())
         .where((name) => !_peopleToSplit.contains(name))
         .toList(growable: false);
+    
+    // Guard against empty courses or courses with no one to split
+    if (_peopleToSplit.isEmpty) {
+      return [];
+    }
+    
     _max = _scheduling.courseControl.getMaxClassSize(course);
     _numSplits = (_peopleToSplit.length / _max).ceil();
     _maxSplitSize = (_peopleToSplit.length / _numSplits).ceil();
